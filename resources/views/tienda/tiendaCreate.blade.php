@@ -25,8 +25,6 @@
         <input type="text" name="editorial" value="{{ old('editorial')}}"><br>
         <label for="precio">Precio</label>
         <input type="text" name="precio" value="{{ old('precio')}}"><br>
-        <label for="codigo">libro_code</label>
-        <input type="text" name="codigo" value="{{ old('codigo')}}"><br>
         
         <input type="submit" value="Enviar">
     </form>

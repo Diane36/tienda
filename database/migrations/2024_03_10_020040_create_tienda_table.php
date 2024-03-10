@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('autor');
             $table->string('editorial');
             $table->string('precio');
-            $table->string('libro_code');
         });
     }
 

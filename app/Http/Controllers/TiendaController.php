@@ -40,7 +40,6 @@ class TiendaController extends Controller
         $libro->autor =$request->autor;
         $libro->editorial =$request->editorial;
         $libro->precio =$request->precio;
-        $libro->libro_code =$request->libro_code;
         $libro->save();
         dd('Validación exitosa');
 
@@ -53,7 +52,7 @@ class TiendaController extends Controller
      */
     public function show(Tienda $tienda)
     {
-        //
+        return view('tienda/tiendaShow', compact('tienda'));
     }
 
     /**
@@ -77,6 +76,7 @@ class TiendaController extends Controller
      */
     public function destroy(Tienda $tienda)
     {
-        //
+        $tienda->delete();
+        return redirect()->route('tienda.index');
     }
 }

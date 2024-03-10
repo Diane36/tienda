@@ -15,8 +15,6 @@
                 <th>Autor</th>
                 <th>Editorial</th>
                 <th>Precio</th>
-                <th>Codigo de libro</th>
-                <th>Creado / Enviado</th>
                 <th>Editar / Eliminar</th>
             </tr>
         </thead>
@@ -27,12 +25,11 @@
                     <td>{{ $tienda->autor }}</td>
                     <td>{{ $tienda->editorial }}</td>
                     <td>{{ $tienda->precio }}</td>
-                    <td>{{ $tienda->libro_code }}</td>
                     <td>{{ $tienda->create_at }}</td>
                     <td>
-                        <a href="{{ route ('tienda.show', $libro)}}" >Detalle</a>    
-                        <a href="{{ route ('tienda.edit', $libro)}}" >Editar</a>
-                        <form action="{{ route ('tienda.destroy', $libro)}}" method="POST">
+                        <a href="{{ route ('tienda.show', $tienda)}}" >Detalle</a>    
+                        <a href="{{ route ('tienda.edit', $tienda)}}" >Editar</a>
+                        <form action="{{ route ('tienda.destroy', $tienda)}}" method="POST">
                             @csrf
                             @method('DELETE')
                             <input type="submit" value="Eliminar">
