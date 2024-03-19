@@ -60,7 +60,7 @@ class TiendaController extends Controller
      */
     public function edit(Tienda $tienda)
     {
-        //
+        return view('tienda.tiendaEdit', compact('tienda'));
     }
 
     /**
@@ -68,7 +68,21 @@ class TiendaController extends Controller
      */
     public function update(Request $request, Tienda $tienda)
     {
-        //
+        $request->validate([
+            'titulo' => 'required',
+            'autor' => 'required',
+            'editorial' => 'required',
+            'precio'=> 'required',
+        ]);
+        $libro = new Tienda();
+        $libro->titulo =$request->titulo;
+        $libro->autor =$request->autor;
+        $libro->editorial =$request->editorial;
+        $libro->precio =$request->precio;
+        $libro->save();
+        dd('Validación exitosa');
+        return redirect()->route('tienda.index');
+        exit();
     }
 
     /**
