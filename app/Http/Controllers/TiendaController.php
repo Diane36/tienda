@@ -4,13 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Tienda;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TiendaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index', 'show');
+         // ->only()
+    }
+    
+     public function index()
     {
         $tiendas=Tienda::all();
         return view('tienda/tiendaIndex',compact('tiendas'));
@@ -41,9 +49,8 @@ class TiendaController extends Controller
         $libro->editorial =$request->editorial;
         $libro->precio =$request->precio;
         $libro->save();
-        dd('Validación exitosa');
 
-        return redirect()->route('tienda.index');
+        return redirect()->route('tienda.index')->with('success', 'Libro agregado exitosamente.');
         exit();
     }
 
@@ -80,7 +87,6 @@ class TiendaController extends Controller
         $libro->editorial =$request->editorial;
         $libro->precio =$request->precio;
         $libro->save();
-        dd('Validación exitosa');
         return redirect()->route('tienda.index');
         exit();
     }
@@ -93,4 +99,6 @@ class TiendaController extends Controller
         $tienda->delete();
         return redirect()->route('tienda.index');
     }
+
+
 }

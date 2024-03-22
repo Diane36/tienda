@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar libro</title>
-</head>
+<x-mi-layout titulo="Listado de libros">
 <body>
     @include('layouts.formError')
     <form action="{{ route('tienda.update', $tienda) }}" method="POST">
@@ -20,5 +14,4 @@
         <input type="text" name="precio" value="{{ old('precio') ?? $tienda->precio}}"><br>
         <input type="submit" value="Enviar">
     </form>
-</body>
-</html>
+</x-mi-layout>

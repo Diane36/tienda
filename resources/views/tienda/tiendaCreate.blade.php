@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar libro</title>
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-</head>
+<x-mi-layout titulo="Agregar nuevo libro">
+
 <body>
-    <form action="/tienda" method="POST">
+    @include('layouts.formError')
+    <form action="{{ route('tienda.store') }}" method="POST">
         @csrf
         <label for="titulo">Titulo</label>
         <input type="text" name="titulo" value="{{ old('titulo')}}"><br>
@@ -29,4 +16,4 @@
         <input type="submit" value="Enviar">
     </form>
 </body>
-</html>
+</x-mi-layout>

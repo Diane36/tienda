@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda de libros</title>
-</head>
-<body>
-    <a href="{{ route('tienda.create') }}">Nuevo Libro</a>
-    <h1>Lista de Libros</h1>
+<x-mi-layout titulo="Listado de libros">
+    <a class="btn btn-primary" href="{{ route('tienda.create') }}">Nuevo Libro</a>
     <table border="1">
         <thead>
             <tr>
@@ -39,5 +31,4 @@
             @endforeach
         </tbody>
     </table>
-</body>
-</html>
+</x-mi-layout>
