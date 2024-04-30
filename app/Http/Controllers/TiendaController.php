@@ -20,8 +20,19 @@ class TiendaController extends Controller
     
      public function index()
     {
-        $tiendas=Tienda::all();
-        return view('tienda/tiendaIndex',compact('tiendas'));
+        $tiendasDelUsuario = Auth::user()->tienda;
+        $todasLasTiendas = Tienda::all();
+
+        if ($tiendasDelUsuario !== null) {
+            $tiendas = $todasLasTiendas->merge($tiendasDelUsuario);
+        } else {
+            $tiendas = $todasLasTiendas;
+        }
+
+        
+        //$tiendas=Tienda::all();
+        //$tiendas = Auth::user()->tienda;
+        return view('tienda.tiendaIndex',compact('tiendas'));
     }
 
     /**
@@ -43,6 +54,10 @@ class TiendaController extends Controller
             'editorial' => 'required',
             'precio'=> 'required',
         ]);
+
+        $request->merge(['user_id' => Auth::id()]);
+        $tienda = Tienda::create($request->all());
+
         $libro = new Tienda();
         $libro->titulo =$request->titulo;
         $libro->autor =$request->autor;
@@ -87,6 +102,9 @@ class TiendaController extends Controller
         $libro->editorial =$request->editorial;
         $libro->precio =$request->precio;
         $libro->save();
+
+        $libro->update($request->all());
+
         return redirect()->route('tienda.index');
         exit();
     }
