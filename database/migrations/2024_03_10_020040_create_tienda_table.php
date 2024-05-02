@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('tiendas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->string('titulo');
             $table->string('autor');
             $table->string('editorial');
             $table->string('precio');
+            $table->softDeletes();
         });
     }
 

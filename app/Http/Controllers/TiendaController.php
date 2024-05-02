@@ -58,13 +58,6 @@ class TiendaController extends Controller
         $request->merge(['user_id' => Auth::id()]);
         $tienda = Tienda::create($request->all());
 
-        $libro = new Tienda();
-        $libro->titulo =$request->titulo;
-        $libro->autor =$request->autor;
-        $libro->editorial =$request->editorial;
-        $libro->precio =$request->precio;
-        $libro->save();
-
         return redirect()->route('tienda.index')->with('success', 'Libro agregado exitosamente.');
         exit();
     }
