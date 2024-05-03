@@ -3,6 +3,11 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Tienda;
+use App\Models\User;
+use App\Policies\TiendaPolicy;
+use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Tienda::class => TiendaPolicy::class,
     ];
 
     /**
@@ -21,6 +26,16 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->registerPolicies();
+
+        Gate::define('editar-tienda', function (User $user, Tienda $tienda) {
+            return $user->id === $tienda->user_id
+            ? Response::allow()
+            : Response::deny('No puedes editar este libro');
+        });
+
+        Gate::define('ver-tienda', function ($user, $tienda) {
+            return $user->id === $tienda->user_id;
+        });
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tienda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TiendaController extends Controller
 {
@@ -67,6 +68,10 @@ class TiendaController extends Controller
      */
     public function show(Tienda $tienda)
     {
+        $this->authorize('show', $tienda);
+        if (Gate::denies('ver-tienda', $tienda)) {
+            abort(403); // Acceso no autorizado
+        }
         return view('tienda/tiendaShow', compact('tienda'));
     }
 
@@ -75,6 +80,7 @@ class TiendaController extends Controller
      */
     public function edit(Tienda $tienda)
     {
+        $this->authorize('update', $tienda);
         return view('tienda.tiendaEdit', compact('tienda'));
     }
 
@@ -83,6 +89,7 @@ class TiendaController extends Controller
      */
     public function update(Request $request, Tienda $tienda)
     {
+        $this->authorize('update', $tienda);
         $request->validate([
             'titulo' => 'required',
             'autor' => 'required',
@@ -107,6 +114,7 @@ class TiendaController extends Controller
      */
     public function destroy(Tienda $tienda)
     {
+        $this->authorize('delete', $tienda);
         $tienda->delete();
         return redirect()->route('tienda.index');
     }
