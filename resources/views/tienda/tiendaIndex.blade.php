@@ -19,13 +19,17 @@
                     <td>{{ $tienda->precio }}</td>
                     <td>{{ $tienda->create_at }}</td>
                     <td>
-                        <a href="{{ route ('tienda.show', $tienda)}}" >Detalle</a>    
-                        <a href="{{ route ('tienda.edit', $tienda)}}" >Editar</a>
-                        <form action="{{ route ('tienda.destroy', $tienda)}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" value="Eliminar">
-                        </form>
+                        <a href="{{ route ('tienda.show', $tienda)}}" >Detalle</a>
+                        @can('update',$tienda)
+                            <a href="{{ route ('tienda.edit', $tienda)}}" >Editar</a>
+                        @endcan
+                        @can('delete',$tienda)
+                            <form action="{{ route ('tienda.destroy', $tienda->id)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="Eliminar">
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

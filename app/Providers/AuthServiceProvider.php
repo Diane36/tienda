@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
             : Response::deny('No puedes editar este libro');
         });
 
-        Gate::define('ver-tienda', function ($user, $tienda) {
+        Gate::define('delete', function ($user, $tienda) {
             return $user->id === $tienda->user_id;
         });
     }

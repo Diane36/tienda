@@ -60,7 +60,6 @@ class TiendaController extends Controller
         $tienda = Tienda::create($request->all());
 
         return redirect()->route('tienda.index')->with('success', 'Libro agregado exitosamente.');
-        exit();
     }
 
     /**
@@ -68,10 +67,6 @@ class TiendaController extends Controller
      */
     public function show(Tienda $tienda)
     {
-        $this->authorize('show', $tienda);
-        if (Gate::denies('ver-tienda', $tienda)) {
-            abort(403); // Acceso no autorizado
-        }
         return view('tienda/tiendaShow', compact('tienda'));
     }
 
@@ -114,6 +109,7 @@ class TiendaController extends Controller
      */
     public function destroy(Tienda $tienda)
     {
+        dd($tienda->id, auth()->id());
         $this->authorize('delete', $tienda);
         $tienda->delete();
         return redirect()->route('tienda.index');

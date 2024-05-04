@@ -21,7 +21,7 @@ class TiendaPolicy
      */
     public function view(User $user, Tienda $tienda): bool
     {
-        return $user->id == 1;
+        //
     }
 
     /**
@@ -45,7 +45,7 @@ class TiendaPolicy
      */
     public function delete(User $user, Tienda $tienda): bool
     {
-        return $user->id == 1;
+        return $user->id === $tienda->user_id;;
     }
 
     /**
