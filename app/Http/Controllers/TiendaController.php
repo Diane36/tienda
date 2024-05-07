@@ -74,7 +74,8 @@ class TiendaController extends Controller
      */
     public function show(Tienda $tienda)
     {
-        return view('tienda/tiendaShow', compact('tienda'));
+        $archivos = Archivo::where('tienda_id', $tienda->id)->get();
+        return view('tienda.tiendaShow', compact('tienda', 'archivos'));
     }
 
     /**
@@ -132,7 +133,7 @@ class TiendaController extends Controller
         return false;
     }
 
-    $ubicacion = $archivo->store('archivos_tienda');
+    $ubicacion = $archivo->store('public/archivos_tienda');
 
     return $tienda->archivos()->create([
         'ubicacion' => $ubicacion,

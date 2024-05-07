@@ -10,10 +10,10 @@
 
     <h2>Archivos</h2>
     <ul>
-        @foreach ($tienda->archivos as $archivo)
+        @foreach ($archivos as $archivo)
             <li>
                 <a href="{{ route('tienda.download', $archivo) }}">
-                    <img src="{{ Storage::url($tienda->imagen_path) }}" alt="{{ $tienda->titulo }}">
+                    <img src="{{ Storage::url($archivo->ubicacion) }}" alt="{{ $archivo->nombre_original }}">
                 </a>
             </li>
         @endforeach
