@@ -8,6 +8,7 @@
                 <th>Editorial</th>
                 <th>Precio</th>
                 <th>Editar / Eliminar</th>
+
             </tr>
         </thead>
         <tbody>

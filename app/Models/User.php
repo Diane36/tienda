@@ -59,5 +59,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    
+    public function tienda()
+    {
+        return $this->belongsTo(Tienda::class);
+    }
 }

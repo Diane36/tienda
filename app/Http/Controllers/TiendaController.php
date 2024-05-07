@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tienda;
+use App\Models\Archivo;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -54,10 +56,15 @@ class TiendaController extends Controller
             'autor' => 'required',
             'editorial' => 'required',
             'precio'=> 'required',
+            'archivo' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         $request->merge(['user_id' => Auth::id()]);
         $tienda = Tienda::create($request->all());
+        $archivo = $this->guardarArchivo($request->archivo, $tienda);
+        if (!$archivo) {
+            return redirect()->route('tienda.index')->with('error', 'Error al cargar el archivo.');
+        }
 
         return redirect()->route('tienda.index')->with('success', 'Libro agregado exitosamente.');
     }
@@ -109,11 +116,28 @@ class TiendaController extends Controller
      */
     public function destroy(Tienda $tienda)
     {
-        dd($tienda->id, auth()->id());
         $this->authorize('delete', $tienda);
         $tienda->delete();
         return redirect()->route('tienda.index');
     }
+    
+    public function download(Archivo $archivo){
+        
+        return response()->download(storage_path('app/' . $archivo->ubicacion), $archivo->nombre_original);
+    }
 
+    protected function guardarArchivo($archivo, $tienda)
+{
+    if (!$archivo->isValid()) {
+        return false;
+    }
 
+    $ubicacion = $archivo->store('archivos_tienda');
+
+    return $tienda->archivos()->create([
+        'ubicacion' => $ubicacion,
+        'nombre_original' => $archivo->getClientOriginalName(),
+        'mime' => $archivo->getMimeType(),
+    ]);
+}
 }

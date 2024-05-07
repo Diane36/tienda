@@ -12,4 +12,15 @@ class Tienda extends Model
     use SoftDeletes;
     protected $fillable = [
         'titulo', 'autor','editorial', 'precio', 'user_id'];
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
+
+    public function archivos()
+    {
+        return $this->hasMany(Archivo::class);
+    }
 }
