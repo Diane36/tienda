@@ -1,4 +1,4 @@
-<x-mi-layout titulo="Listado de libros">
+<x-mi-layout titulo="Listado de Libros">
     <a class="btn btn-primary" href="{{ route('tienda.create') }}">Nuevo Libro</a>
     <table border="1">
         <thead>
