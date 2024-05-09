@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Tienda;
 use App\Models\Archivo;
+use Illuminate\Mail\Message;
+use App\Mail\AgregaLibro;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -65,6 +68,8 @@ class TiendaController extends Controller
         if (!$archivo) {
             return redirect()->route('tienda.index')->with('error', 'Error al cargar el archivo.');
         }
+
+        Mail::to(auth()->user()->email)->send(new AgregaLibro($tienda));
 
         return redirect()->route('tienda.index')->with('success', 'Libro agregado exitosamente.');
     }
