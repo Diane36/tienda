@@ -29,11 +29,12 @@ class TiendaController extends Controller
         $tiendasDelUsuario = Auth::user()->tienda;
         $todasLasTiendas = Tienda::all();
 
-        if ($tiendasDelUsuario !== null) {
-            $tiendas = $todasLasTiendas->merge($tiendasDelUsuario);
-        } else {
-            $tiendas = $todasLasTiendas;
-        }
+        //if ($tiendasDelUsuario !== null) {
+          //  $tiendas = $todasLasTiendas->merge($tiendasDelUsuario);
+        //} else {
+          //  $tiendas = $todasLasTiendas;
+        //}
+        $tiendas = Tienda::with('archivos')->get();
 
         
         //$tiendas=Tienda::all();
@@ -63,7 +64,7 @@ class TiendaController extends Controller
         ]);
 
         $request->merge(['user_id' => Auth::id()]);
-        $tienda = Tienda::create($request->all());
+        $tienda = Tienda::create($request->all())->load('archivos');
         $archivo = $this->guardarArchivo($request->archivo, $tienda);
         if (!$archivo) {
             return redirect()->route('tienda.index')->with('error', 'Error al cargar el archivo.');
@@ -104,14 +105,8 @@ class TiendaController extends Controller
             'editorial' => 'required',
             'precio'=> 'required',
         ]);
-        $libro = new Tienda();
-        $libro->titulo =$request->titulo;
-        $libro->autor =$request->autor;
-        $libro->editorial =$request->editorial;
-        $libro->precio =$request->precio;
-        $libro->save();
-
-        $libro->update($request->all());
+        $tienda->update($request->all());
+        $tienda->load('archivos');
 
         return redirect()->route('tienda.index');
         exit();
